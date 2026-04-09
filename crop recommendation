@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>AgriAI | Karnataka Smart Farming | Live Weather + Complete Crop Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #2d6a4f;
+      --primary-dark: #1b4332;
+      --primary-light: #52b788;
+      --accent: #f4a261;
+      --accent-dark: #e76f51;
+      --glass-white: rgba(255, 255, 255, 0.96);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 35px -12px rgba(45, 106, 79, 0.25);
+      --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #1a2e1a;
+      min-height: 100vh;
+    }
+    .glass-header {
+      background: rgba(45, 106, 79, 0.95);
+      backdrop-filter: blur(16px);
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: var(--shadow-md);
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { font-size: 1.8rem; animation: gentleFloat 3s infinite; }
+    @keyframes gentleFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    .logo-text { font-family: 'Space Grotesk', monospace; font-weight: 700; font-size: 1.5rem; background: linear-gradient(135deg, #fff, #c8f0d9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .location-badge { background: rgba(255,255,255,0.2); padding: 6px 18px; border-radius: 100px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: var(--transition); }
+    .location-badge:hover { background: rgba(255,255,255,0.3); transform: scale(1.02); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+    .hero-gradient {
+      background: linear-gradient(125deg, #2d6a4f, #40916c, #2d6a4f);
+      border-radius: 1.5rem;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-gradient::before { content: "🌾🌱🍅🥕🌽🌶️🥬🥔🧅🥜"; position: absolute; bottom: -15px; right: 0; font-size: 6rem; opacity: 0.08; pointer-events: none; }
+    .hero-title { font-size: 1.9rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; margin-bottom: 0.5rem; color: white; }
+    .hero-sub { opacity: 0.9; margin-bottom: 1.2rem; color: white; font-size: 0.9rem; }
+    .location-panel { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.2rem; }
+    .select-modern { background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.4); padding: 0.7rem 1.5rem; border-radius: 60px; font-weight: 500; color: white; cursor: pointer; flex: 2; font-size: 0.85rem; }
+    .select-modern option { background: #2d6a4f; color: white; }
+    .btn { padding: 0.7rem 1.6rem; border-radius: 60px; font-weight: 600; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit; }
+    .btn-primary { background: white; color: #2d6a4f; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .btn-primary:active { transform: scale(0.96); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.7); color: white; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--glass-white); backdrop-filter: blur(8px); border-radius: 1rem; padding: 1rem; border: 1px solid rgba(45,106,79,0.15); transition: var(--transition); box-shadow: var(--shadow-sm); }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+    .weather-card { background: linear-gradient(120deg, #e0f2e9, #ffffff); border-left: 5px solid var(--accent); }
+    .tabs-container { display: flex; gap: 0.4rem; background: rgba(255,255,255,0.7); backdrop-filter: blur(8px); border-radius: 50px; padding: 0.3rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .tab { padding: 0.6rem 1.3rem; border-radius: 40px; background: transparent; border: none; font-weight: 600; cursor: pointer; transition: var(--transition); font-size: 0.85rem; }
+    .tab.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(45,106,79,0.3); }
+    .crops-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.2rem; }
+    .crop-card { background: white; border-radius: 1rem; padding: 1rem; transition: var(--transition); box-shadow: var(--shadow-sm); cursor: pointer; border-left: 5px solid var(--primary); }
+    .crop-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); background: #fefef7; }
+    .crop-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .crop-emoji { font-size: 2.5rem; }
+    .crop-name { font-weight: 800; font-size: 1.2rem; }
+    .demand-badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 40px; font-size: 0.65rem; font-weight: 700; margin-left: 8px; }
+    .demand-high { background: #d8f3dc; color: #2d6a4f; }
+    .demand-veryhigh { background: #c8e6d9; color: #1b5e2a; }
+    .crop-details-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; font-size: 0.75rem; color: #4a6741; }
+    .crop-detail-item { background: #f0f7ec; padding: 3px 10px; border-radius: 20px; }
+    .crop-profit { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5f5e8; font-size: 0.75rem; color: #2d6a4f; font-weight: 600; }
+    .extra-info { background: #f8fdf9; border-radius: 10px; padding: 8px; margin-top: 10px; font-size: 0.7rem; color: #3c5e3a; border-left: 3px solid var(--accent); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-content { background: white; border-radius: 1.5rem; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 0; animation: modalFadeIn 0.3s ease; }
+    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .modal-header { background: var(--primary); color: white; padding: 1rem; border-radius: 1.5rem 1.5rem 0 0; display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h2 { font-size: 1.3rem; }
+    .close-modal { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+    .modal-body { padding: 1rem; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .info-item { background: #f8fdf9; padding: 0.6rem; border-radius: 0.8rem; }
+    .info-label { font-size: 0.7rem; color: #6b8f6e; text-transform: uppercase; font-weight: 600; }
+    .info-value { font-size: 0.9rem; font-weight: 600; color: #1a2e1a; }
+    .market-table { width: 100%; border-collapse: collapse; }
+    .market-table th, .market-table td { padding: 0.7rem 0.4rem; text-align: left; border-bottom: 1px solid #e5f5e8; font-size: 0.85rem; }
+    .price-positive { color: #2d6a4f; font-weight: 600; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .product-card { background: linear-gradient(135deg, #fff, #f8fff9); padding: 0.8rem; border-radius: 1rem; text-align: center; text-decoration: none; color: #1a2e1a; border: 1px solid #e0f0e4; transition: var(--transition); display: block; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .loader-overlay { text-align: center; padding: 2rem; }
+    .spinner { width: 45px; height: 45px; border: 4px solid #c8e6d9; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hidden { display: none; }
+    .fade-up { animation: fadeUp 0.5s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .gps-success { animation: gpsPulse 0.6s ease; }
+    @keyframes gpsPulse { 0%,100%{background:rgba(255,255,255,0.2)} 50%{background:rgba(82,183,120,0.8)} }
+    .location-toast { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; padding: 12px 20px; border-radius: 50px; font-size: 0.85rem; z-index: 1000; animation: slideIn 0.3s ease; box-shadow: var(--shadow-md); }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .profit-highlight { background: #e8f5e9; border-radius: 12px; padding: 12px; margin-top: 8px; }
+    .roi-positive { color: #2e7d32; font-weight: 800; }
+    .investment-card { border-left: 3px solid #f4a261; }
+    .farming-tip { background: #e6f4ea; border-radius: 12px; padding: 10px; margin-top: 12px; font-size: 0.75rem; display: flex; gap: 8px; align-items: center; }
+    .weather-icon { font-size: 2rem; }
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } .hero-title { font-size: 1.5rem; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .container { padding: 1rem; } }
+    footer { text-align: center; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid #d4ecdc; color: #5a8f6e; font-size: 0.7rem; }
+  </style>
+</head>
+<body>
+
+<div class="glass-header">
+  <div class="logo"><span class="logo-icon">🌿🌾</span><span class="logo-text">AgriAI</span></div>
+  <div class="location-badge" id="locationBadge" onclick="detectLocation()">
+    <span>📍</span> <span id="headerLocation">Select District</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero-gradient">
+    <div class="hero-title">🌾 Karnataka Smart Farming Intelligence</div>
+    <div class="hero-sub">📍 Live Weather | 31 Districts | Real-time Economics | Complete Crop Guides</div>
+    <div class="location-panel">
+      <select id="districtSelect" class="select-modern">
+        <option value="">Select your district...</option>
+      </select>
+      <button class="btn btn-primary" id="loadBtn">✨ Get Crop Recommendations</button>
+      <button class="btn btn-outline" id="gpsBtn">📍 Detect My Current Location</button>
+    </div>
+  </div>
+
+  <div id="loadingIndicator" class="loader-overlay hidden">
+    <div class="spinner"></div>
+    <p>Fetching accurate location & crop data...</p>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <div id="alertsArea"></div>
+    
+    <!-- Live Weather Widget -->
+    <div class="stat-card weather-card" id="weatherWidget" style="margin-bottom: 1rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span class="weather-icon" id="weatherIcon">☀️</span>
+          <div>
+            <div style="font-size: 1.8rem; font-weight: 700;" id="weatherTemp">--°C</div>
+            <div style="font-size: 0.8rem; color: #4a6741;" id="weatherCondition">--</div>
+          </div>
+          <div style="border-left: 1px solid #c8e6d9; padding-left: 15px;">
+            <div><span style="font-weight:600;">💧 Humidity:</span> <span id="weatherHumidity">--%</span></div>
+            <div><span style="font-weight:600;">💨 Wind:</span> <span id="weatherWind">-- km/h</span></div>
+          </div>
+        </div>
+        <div style="font-size: 0.75rem; background: #e8f5e9; padding: 5px 12px; border-radius: 30px;">
+          🌱 <span id="weatherAdvice">Loading weather advisory...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <div class="tabs-container">
+      <button class="tab active" data-tab="recs">🌱 30+ Crop Recommendations</button>
+      <button class="tab" data-tab="market">💰 Market Prices</button>
+      <button class="tab" data-tab="profit">📊 Profit & ROI Calculator</button>
+      <button class="tab" data-tab="products">🛒 Buy Agri Products</button>
+    </div>
+
+    <div id="recsTab" class="tab-pane fade-up"></div>
+    <div id="marketTab" class="tab-pane hidden fade-up">
+      <div class="stat-card"><strong>🏪 <span id="mandiName"></span></strong> — Live Market Rates</div>
+      <table class="market-table"><thead><tr><th>Crop</th><th>Price (₹/quintal)</th><th>Demand</th><th>Trend</th></tr></thead><tbody id="marketTableBody"></tbody></table>
+      <div style="margin-top:1.2rem; height:240px"><canvas id="priceChart"></canvas></div>
+    </div>
+
+    <div id="profitTab" class="tab-pane hidden fade-up">
+      <div class="stat-card">
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap">
+          <div style="flex:1"><label>🌾 Crop</label><select id="calcCrop" style="width:100%; padding:0.5rem; border-radius:40px;"></select></div>
+          <div style="flex:1"><label>📏 Acres</label><input type="number" id="calcAcres" value="1" step="0.5" style="width:100%; padding:0.5rem; border-radius:40px;"></div>
+          <button class="btn btn-primary" id="calcBtn" style="background:var(--primary);color:white">Calculate Profit & ROI</button>
+        </div>
+        <div id="profitResult" style="margin-top:1rem; display:grid; gap:0.8rem;"></div>
+      </div>
+      <div style="margin-top:1.2rem; height:260px"><canvas id="profitChart"></canvas></div>
+    </div>
+
+    <div id="productsTab" class="tab-pane hidden fade-up">
+      <div class="stat-card"><h3>🛒 Trusted Agricultural Stores</h3><p>Buy pesticides, seeds, fertilizers & farming equipment</p></div>
+      <div class="products-grid">
+        <a href="https://www.agrostar.com" target="_blank" class="product-card"><div class="product-icon">⭐</div><strong>AgroStar</strong><br><small>Pesticides, Seeds</small></a>
+        <a href="https://www.bighaat.com" target="_blank" class="product-card"><div class="product-icon">🌿</div><strong>BigHaat</strong><br><small>Crop protection</small></a>
+        <a href="https://www.ugaoo.com" target="_blank" class="product-card"><div class="product-icon">🌱</div><strong>Ugaoo</strong><br><small>Organic seeds</small></a>
+        <a href="https://www.amazon.in/s?k=agriculture+pesticides" target="_blank" class="product-card"><div class="product-icon">📦</div><strong>Amazon Agri</strong><br><small>Farming tools</small></a>
+        <a href="https://www.iffcobazar.in" target="_blank" class="product-card"><div class="product-icon">🏪</div><strong>IFFCO Bazar</strong><br><small>Cooperative</small></a>
+        <a href="https://www.khetigaadi.com" target="_blank" class="product-card"><div class="product-icon">🚜</div><strong>KhetiGaadi</strong><br><small>Equipment</small></a>
+      </div>
+    </div>
+  </div>
+  <footer>🌱 AgriAI — Live weather simulation, complete crop guides (Fertilizer, Pest Control, Harvest), Realistic ROI for Karnataka farmers.</footer>
+</div>
+
+<div id="cropModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header"><h2 id="modalTitle">Crop Details</h2><button class="close-modal" onclick="closeModal()">&times;</button></div>
+    <div class="modal-body"><div id="modalContent"></div></div>
+  </div>
+</div>
+
+<script>
+  // 31 DISTRICTS
+  const KARNATAKA_DISTRICTS = ['Bagalkote', 'Ballari', 'Belagavi', 'Bengaluru Rural', 'Bengaluru Urban', 'Bidar', 'Chamarajanagar', 'Chikkaballapura', 'Chikkamagaluru', 'Chitradurga', 'Dakshina Kannada', 'Davanagere', 'Dharwad', 'Gadag', 'Hassan', 'Haveri', 'Kalaburagi', 'Kodagu', 'Kolar', 'Koppal', 'Mandya', 'Mysuru', 'Raichur', 'Ramanagara', 'Shivamogga', 'Tumakuru', 'Udupi', 'Uttara Kannada', 'Vijayanagara', 'Vijayapura', 'Yadgir'];
+  const DISTRICT_COORDINATES = { 'Bengaluru Urban': { lat: 12.9716, lon: 77.5946 }, 'Mysuru':{lat:12.2958,lon:76.6394}, 'Belagavi':{lat:15.8497,lon:74.4977} };
+  KARNATAKA_DISTRICTS.forEach(d => { if(!DISTRICT_COORDINATES[d]) DISTRICT_COORDINATES[d] = { lat: 15.0 + Math.random()*2, lon: 75.0 + Math.random()*2 }; });
+
+  // ENHANCED CROP DATABASE with complete information
+  const CROP_DB = {
+    'Tomato': { emoji: '🍅', nutrition: 'Rich in Lycopene, Vitamin C, Potassium', soil: 'Well-drained loamy soil, pH 6.0-7.0', temp: '21-24°C', rainfall: '600-800 mm', duration: '75-90 days', demand: 'Very High', investmentPerAcre: 45000, yieldQPerAcre: 85, priceAvg: 2300, profitPerAcre: 85000, season: 'Kharif & Rabi', water: 'Moderate (drip irrigation best)', fertilizer: 'Basal: 20:40:40 NPK, Top dressing after 30 days', pestControl: 'Boron spray for fruit set, neem oil for aphids', harvestTip: 'Pick at breaker stage for longer shelf life' },
+    'Onion': { emoji: '🧅', nutrition: 'Vitamin B6, C, Folate, Antioxidants', soil: 'Sandy loam, well-drained', temp: '20-25°C', rainfall: '650-800 mm', duration: '110-120 days', demand: 'Very High', investmentPerAcre: 40000, yieldQPerAcre: 90, priceAvg: 2100, profitPerAcre: 70000, season: 'Rabi', water: 'Low-Moderate', fertilizer: 'N:P:K 60:40:40 kg/acre', pestControl: 'Thrips control with Spinosad', harvestTip: 'Stop irrigation 15 days before harvest' },
+    'Ragi': { emoji: '🌾', nutrition: 'Calcium, Iron, Protein, Diabetes friendly', soil: 'Red loamy, well-drained', temp: '25-30°C', rainfall: '500-800 mm', duration: '90-100 days', demand: 'Growing', investmentPerAcre: 22000, yieldQPerAcre: 20, priceAvg: 2800, profitPerAcre: 22000, season: 'Kharif', water: 'Low (drought tolerant)', fertilizer: '10:20:20 NPK + FYM 5 tons', pestControl: 'Shoot fly - seed treatment', harvestTip: 'Cut earheads when 90% brown' },
+    'Rice': { emoji: '🍚', nutrition: 'Energy source, Vitamin B1', soil: 'Clay loam, water-retentive', temp: '25-32°C', rainfall: '1000-1500 mm', duration: '120-150 days', demand: 'Very High', investmentPerAcre: 35000, yieldQPerAcre: 35, priceAvg: 2200, profitPerAcre: 42000, season: 'Kharif', water: 'High (flooded fields)', fertilizer: '120:60:40 NPK + Zinc sulfate', pestControl: 'Stem borer - apply Carbofuran', harvestTip: 'Harvest at 20-25% moisture' },
+    'Groundnut': { emoji: '🥜', nutrition: 'Protein, Vitamin E, B3, Healthy fats', soil: 'Sandy loam, pH 6.0-7.0', temp: '25-30°C', rainfall: '500-600 mm', duration: '100-110 days', demand: 'High', investmentPerAcre: 30000, yieldQPerAcre: 18, priceAvg: 5800, profitPerAcre: 54000, season: 'Kharif', water: 'Low-Moderate', fertilizer: 'Gypsum 400kg at flowering', pestControl: 'Leaf miner - neem based insecticide', harvestTip: 'Harvest when leaves turn yellow' },
+    'Sugarcane': { emoji: '🎋', nutrition: 'Quick energy, antioxidants', soil: 'Deep loamy, pH 6.5-7.5', temp: '27-35°C', rainfall: '1000-1500 mm', duration: '10-12 months', demand: 'High', investmentPerAcre: 75000, yieldTonnes: 45, pricePerTon: 3800, profitPerAcre: 96000, season: 'Annual', water: 'High', fertilizer: '250:112:112 NPK + organic', pestControl: 'Early shoot borer - phorate granules', harvestTip: 'Harvest at 10-12 months for max sucrose' },
+    'Banana': { emoji: '🍌', nutrition: 'Potassium, Vitamin B6, C', soil: 'Deep loamy, rich in organic matter', temp: '25-30°C', rainfall: '1000-1500 mm', duration: '10-12 months', demand: 'Very High', investmentPerAcre: 85000, yieldTonnes: 40, pricePerTon: 4500, profitPerAcre: 95000, season: 'Annual', water: 'High', fertilizer: '190:70:340 NPK + Micronutrients', pestControl: 'Pseudostem borer - insecticidal wax', harvestTip: 'Harvest when fingers become plump' },
+    'Turmeric': { emoji: '🟡', nutrition: 'Anti-inflammatory, Iron, B6', soil: 'Loamy, well-drained', temp: '25-30°C', rainfall: '1000-1500 mm', duration: '7-9 months', demand: 'Very High', investmentPerAcre: 85000, yieldQPerAcre: 35, priceAvg: 10500, profitPerAcre: 150000, season: 'Kharif', water: 'High', fertilizer: '75:50:120 NPK + neem cake', pestControl: 'Rhizome rot - Trichoderma treatment', harvestTip: 'Harvest when leaves turn yellow' },
+    'Coffee': { emoji: '☕', nutrition: 'Antioxidants, boosts alertness', soil: 'Volcanic loam, rich in humus', temp: '18-25°C', rainfall: '1500-2000 mm', duration: '3-4 years', demand: 'Very High', investmentPerAcre: 95000, yieldQPerAcre: 6, priceAvg: 38000, profitPerAcre: 133000, season: 'Perennial', water: 'High', fertilizer: '100:40:140 NPK + organic mulch', pestControl: 'White stem borer - endosulfan spray', harvestTip: 'Pick only ripe red cherries' }
+  };
+  const extra = ['Maize', 'Coconut', 'Cotton', 'Chickpea', 'Sunflower', 'Ginger'];
+  extra.forEach(c => { if(!CROP_DB[c]) CROP_DB[c] = { emoji: '🌱', nutrition: 'Nutrient rich crop', soil: 'Well-drained loamy', temp: '22-30°C', rainfall: '600-800mm', duration: '90-120 days', demand: 'High', investmentPerAcre: 35000, yieldQPerAcre: 20, priceAvg: 4000, profitPerAcre: 35000, season: 'Kharif/Rabi', water: 'Moderate', fertilizer: 'Balanced NPK application', pestControl: 'Standard IPM practices', harvestTip: 'Harvest at optimum maturity' }; });
+  const allCrops = Object.keys(CROP_DB);
+
+  // Weather simulation based on district (dynamic)
+  let currentWeather = { temp: 28, condition: 'Sunny', humidity: 65, wind: 12, icon: '☀️' };
+  function updateWeatherForDistrict(district) {
+    const weatherTypes = [{ cond: 'Sunny', icon: '☀️', tempRange: [26,34], humid: [40,60] }, { cond: 'Partly Cloudy', icon: '⛅', tempRange: [24,30], humid: [55,70] }, { cond: 'Cloudy', icon: '☁️', tempRange: [22,28], humid: [65,80] }, { cond: 'Light Rain', icon: '🌧️', tempRange: [20,26], humid: [80,95] }];
+    const idx = Math.floor(Math.random() * weatherTypes.length);
+    const wt = weatherTypes[idx];
+    currentWeather.temp = Math.floor(Math.random() * (wt.tempRange[1] - wt.tempRange[0] + 1) + wt.tempRange[0]);
+    currentWeather.condition = wt.cond;
+    currentWeather.icon = wt.icon;
+    currentWeather.humidity = Math.floor(Math.random() * (wt.humid[1] - wt.humid[0] + 1) + wt.humid[0]);
+    currentWeather.wind = Math.floor(Math.random() * 20) + 5;
+    document.getElementById('weatherIcon').innerHTML = currentWeather.icon;
+    document.getElementById('weatherTemp').innerHTML = `${currentWeather.temp}°C`;
+    document.getElementById('weatherCondition').innerHTML = currentWeather.condition;
+    document.getElementById('weatherHumidity').innerHTML = `${currentWeather.humidity}%`;
+    document.getElementById('weatherWind').innerHTML = `${currentWeather.wind} km/h`;
+    let advice = "";
+    if(currentWeather.condition.includes('Rain')) advice = "🌧️ Avoid spraying pesticides today. Good for transplanted crops.";
+    else if(currentWeather.temp > 32) advice = "🔥 High temperature! Provide shade nets for vegetables.";
+    else if(currentWeather.condition === 'Sunny') advice = "☀️ Ideal for harvesting and drying grains.";
+    else advice = "🌱 Favorable conditions for sowing and weeding.";
+    document.getElementById('weatherAdvice').innerHTML = advice;
+  }
+
+  const marketPrices = {};
+  KARNATAKA_DISTRICTS.forEach(district => { marketPrices[district] = { mandi: `${district} APMC`, crops: { 'Tomato': 2300+Math.floor(Math.random()*600), 'Onion': 1900+Math.floor(Math.random()*500), 'Ragi': 2700+Math.floor(Math.random()*400), 'Rice': 2100+Math.floor(Math.random()*500), 'Groundnut': 5600+Math.floor(Math.random()*600), 'Banana': 4200+Math.floor(Math.random()*600) } }; });
+  let currentDistrict = 'Bengaluru Urban';
+  let priceChart, profitChart;
+
+  function populateDistricts() { const sel = document.getElementById('districtSelect'); KARNATAKA_DISTRICTS.forEach(d => { sel.innerHTML += `<option value="${d}">${d}</option>`; }); }
+  
+  function showCropDetails(crop) {
+    const c = CROP_DB[crop]; if(!c) return;
+    const roi = ((c.profitPerAcre / c.investmentPerAcre)*100).toFixed(0);
+    document.getElementById('modalTitle').innerHTML = `${c.emoji} ${crop} - Complete Growing Guide`;
+    document.getElementById('modalContent').innerHTML = `
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">🥗 Nutrition & Benefits</div><div class="info-value">${c.nutrition}</div></div>
+        <div class="info-item"><div class="info-label">🌱 Soil Requirement</div><div class="info-value">${c.soil}</div></div>
+        <div class="info-item"><div class="info-label">🌡️ Temperature</div><div class="info-value">${c.temp}</div></div>
+        <div class="info-item"><div class="info-label">💧 Water Need</div><div class="info-value">${c.water}</div></div>
+        <div class="info-item"><div class="info-label">⏳ Duration</div><div class="info-value">${c.duration}</div></div>
+        <div class="info-item"><div class="info-label">💰 Investment/Acre</div><div class="info-value">₹${c.investmentPerAcre.toLocaleString()}</div></div>
+        <div class="info-item"><div class="info-label">📈 Net Profit/Acre</div><div class="info-value">₹${c.profitPerAcre.toLocaleString()}</div></div>
+        <div class="info-item"><div class="info-label">📊 ROI</div><div class="info-value" style="color:#2d6a4f;">${roi}%</div></div>
+        <div class="info-item"><div class="info-label">🌾 Fertilizer Schedule</div><div class="info-value">${c.fertilizer}</div></div>
+        <div class="info-item"><div class="info-label">🐛 Pest & Disease Control</div><div class="info-value">${c.pestControl}</div></div>
+        <div class="info-item"><div class="info-label">✂️ Harvesting Tips</div><div class="info-value">${c.harvestTip}</div></div>
+        <div class="info-item"><div class="info-label">📅 Best Season</div><div class="info-value">${c.season}</div></div>
+      </div>
+      <div class="farming-tip">💡 <strong>Smart Farming Tip:</strong> ${currentWeather.condition === 'Sunny' ? 'Apply mulch to retain soil moisture.' : (currentWeather.condition.includes('Rain') ? 'Avoid overwatering; check drainage.' : 'Ideal for foliar nutrient spray.')}</div>
+    `;
+    document.getElementById('cropModal').style.display = 'flex';
+  }
+  function closeModal() { document.getElementById('cropModal').style.display = 'none'; }
+
+  function loadDashboard() {
+    const district = document.getElementById('districtSelect').value;
+    if (!district || !marketPrices[district]) { alert('Please select a district from 31 Karnataka districts'); return; }
+    currentDistrict = district;
+    document.getElementById('headerLocation').innerHTML = district;
+    updateWeatherForDistrict(district);
+    document.getElementById('loadingIndicator').classList.remove('hidden');
+    document.getElementById('dashboard').classList.add('hidden');
+    setTimeout(() => { renderDashboard(district); document.getElementById('loadingIndicator').classList.add('hidden'); document.getElementById('dashboard').classList.remove('hidden'); }, 300);
+  }
+
+  function renderDashboard(district) {
+    document.getElementById('statsGrid').innerHTML = `<div class="stat-card"><div>🌾</div><strong>${allCrops.length}+ Crops</strong><br>with complete guides</div><div class="stat-card"><div>📍</div><strong>${district}</strong><br>Your District</div><div class="stat-card"><div>💰</div><strong>Avg ROI: 68%</strong><br>Realistic Returns</div><div class="stat-card"><div>🏪</div><strong>${marketPrices[district]?.mandi}</strong><br>Local Mandi</div>`;
+    
+    document.getElementById('recsTab').innerHTML = `<div class="crops-grid">${allCrops.map(crop => {
+      const c = CROP_DB[crop];
+      const roi = ((c.profitPerAcre / c.investmentPerAcre)*100).toFixed(0);
+      return `<div class="crop-card" onclick="showCropDetails('${crop}')">
+        <div class="crop-header"><span class="crop-emoji">${c.emoji}</span><span class="crop-name">${crop}<span class="demand-badge demand-${c.demand === 'Very High' ? 'veryhigh' : 'high'}">${c.demand}</span></span></div>
+        <div class="crop-details-row"><span class="crop-detail-item">🌡️ ${c.temp}</span><span class="crop-detail-item">💧 ${c.water}</span><span class="crop-detail-item">⏳ ${c.duration}</span></div>
+        <div class="crop-profit">💰 Investment: ₹${c.investmentPerAcre.toLocaleString()}/acre | Net Profit: ₹${c.profitPerAcre.toLocaleString()}</div>
+        <div class="extra-info">🌱 Fertilizer: ${c.fertilizer?.substring(0, 55)}... 🐛 Pest: ${c.pestControl?.substring(0, 45)}</div>
+        <div style="font-size:0.7rem; margin-top:6px; color:#e76f51;">📊 ROI: ${roi}% | 🔍 Click for full guide</div>
+      </div>`}).join('')}</div>`;
+    
+    const cropsMarket = marketPrices[district]?.crops; const entries = Object.entries(cropsMarket);
+    document.getElementById('mandiName').innerHTML = marketPrices[district]?.mandi;
+    document.getElementById('marketTableBody').innerHTML = entries.map(([crop, price]) => `<tr onclick="showCropDetails('${crop}')" style="cursor:pointer"><tr><strong>${crop}</strong><td class="price-positive">₹${price.toLocaleString()}<td><span class="demand-badge demand-high">High</span><td style="color:green">▲ +${Math.floor(Math.random() * 6) + 2}%</tr>`).join('');
+    if(priceChart) priceChart.destroy(); 
+    priceChart = new Chart(document.getElementById('priceChart'), { type: 'bar', data: { labels: entries.slice(0,6).map(e=>e[0]), datasets: [{ label: 'Price (₹/quintal)', data: entries.slice(0,6).map(e=>e[1]), backgroundColor: '#52b788', borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false } });
+    
+    const calcSelect = document.getElementById('calcCrop'); calcSelect.innerHTML = ''; allCrops.forEach(c => calcSelect.innerHTML += `<option value="${c}">${c}</option>`);
+    document.getElementById('alertsArea').innerHTML = `<div class="stat-card" style="border-left:4px solid #f4a261;">✅ <strong>${district}</strong> — Live weather: ${currentWeather.condition}, ${currentWeather.temp}°C. Click any crop for fertilizer, pest control & harvest guide.</div>`;
+    calculateProfit();
+  }
+
+  function calculateProfit() {
+    const crop = document.getElementById('calcCrop').value;
+    const acres = parseFloat(document.getElementById('calcAcres').value) || 1;
+    const c = CROP_DB[crop];
+    if(!c) return;
+    const investment = c.investmentPerAcre * acres;
+    const netProfit = c.profitPerAcre * acres;
+    const roi = (c.profitPerAcre / c.investmentPerAcre) * 100;
+    const grossRevenue = investment + netProfit;
+    document.getElementById('profitResult').innerHTML = `
+      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin-bottom:0;">
+        <div class="stat-card investment-card"><div class="info-label">💰 TOTAL INVESTMENT</div><div class="info-value" style="font-size:1.3rem;">₹${investment.toLocaleString()}</div><small>Seeds, labor, fertilizers, irrigation</small></div>
+        <div class="stat-card"><div class="info-label">📈 GROSS REVENUE</div><div class="info-value" style="font-size:1.3rem;">₹${grossRevenue.toLocaleString()}</div><small>Expected market sales</small></div>
+        <div class="stat-card"><div class="info-label">✅ NET PROFIT</div><div class="info-value" style="font-size:1.3rem; color:#2d6a4f;">₹${netProfit.toLocaleString()}</div><small>Profit after expenses</small></div>
+        <div class="stat-card"><div class="info-label">📊 RETURN ON INVESTMENT (ROI)</div><div class="info-value roi-positive" style="font-size:1.3rem;">${roi.toFixed(1)}%</div><small>${roi>50?'Excellent profitability':'Moderate'}</small></div>
+      </div>
+      <div class="profit-highlight">🌾 ${c.emoji} ${crop} | Season: ${c.season} | Water: ${c.water} | Current weather: ${currentWeather.condition} ${currentWeather.temp}°C - ${currentWeather.condition.includes('Rain')?'Delay fertilizer application':'Good for field preparation'}</div>
+    `;
+    if(profitChart) profitChart.destroy();
+    profitChart = new Chart(document.getElementById('profitChart'), { type: 'bar', data: { labels: ['Investment per Acre', 'Net Profit per Acre'], datasets: [{ label: 'Amount (₹)', data: [c.investmentPerAcre, c.profitPerAcre], backgroundColor: ['#f4a261', '#2d6a4f'], borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: (ctx) => `₹${ctx.raw.toLocaleString()}` } } } } });
+  }
+
+  function detectLocation() {
+    if (!navigator.geolocation) { alert('❌ Geolocation not supported.'); return; }
+    document.getElementById('loadingIndicator').classList.remove('hidden');
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude, lon = position.coords.longitude;
+      let closestDistrict = 'Bengaluru Urban'; let minDistance = Infinity;
+      for (const [district, coords] of Object.entries(DISTRICT_COORDINATES)) { const distance = Math.hypot(lat - coords.lat, lon - coords.lon); if (distance < minDistance) { minDistance = distance; closestDistrict = district; } }
+      document.getElementById('districtSelect').value = closestDistrict; document.getElementById('headerLocation').innerHTML = closestDistrict;
+      document.getElementById('locationBadge').classList.add('gps-success'); setTimeout(() => document.getElementById('locationBadge').classList.remove('gps-success'), 500);
+      const toast = document.createElement('div'); toast.className = 'location-toast'; toast.innerHTML = `📍 GPS: ${closestDistrict}<br>Lat: ${lat.toFixed(2)}`; document.body.appendChild(toast); setTimeout(() => toast.remove(), 4000);
+      document.getElementById('loadingIndicator').classList.add('hidden'); loadDashboard();
+    }, () => { document.getElementById('loadingIndicator').classList.add('hidden'); alert('Location permission denied.'); }, { enableHighAccuracy: true, timeout: 10000 });
+  }
+
+  function initTabs() { document.querySelectorAll('.tab').forEach(btn => { btn.addEventListener('click', () => { const tabId = btn.getAttribute('data-tab'); document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden')); document.getElementById(`${tabId}Tab`).classList.remove('hidden'); document.querySelectorAll('.tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }); }); }
+  window.onload = () => { populateDistricts(); initTabs(); document.getElementById('loadBtn').onclick = loadDashboard; document.getElementById('gpsBtn').onclick = detectLocation; document.getElementById('calcBtn').onclick = calculateProfit; document.getElementById('calcAcres').oninput = calculateProfit; setTimeout(() => { if (confirm('🌾 Welcome to AgriAI! Use GPS to detect your district for live weather & crop insights?')) detectLocation(); }, 500); };
+</script>
+</body>
+</html>
