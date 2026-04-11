@@ -1,0 +1,512 @@
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+
+
+
+<!-- PAGE 1 — LANDING (unchanged) -->
+<div id="pg-landing" class="screen active">
+  <div class="lp-bg">
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#66bb6a"/></svg>
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#a5d6a7"/></svg>
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#81c784"/></svg>
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#66bb6a"/></svg>
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#c8e6c9"/></svg>
+    <svg class="lp-leaf" viewBox="0 0 100 100"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z" fill="#a5d6a7"/></svg>
+  </div>
+  <div class="lp-body">
+    <div class="lp-pill">🌿 Smart Agriculture Platform for Indian Farmers</div>
+    <h1 class="lp-h1">Grow Smarter,<br><span>Harvest Better</span></h1>
+    <p class="lp-sub">AI-powered crop intelligence, disease detection, and market insights — built for every farmer, in every language.</p>
+    <div class="lp-btns">
+      <button class="btn-lp-green" onclick="goPage('pg-login')">Get Started Free</button>
+      <button class="btn-lp-ghost" onclick="goPage('pg-login')">▶ Watch Demo</button>
+    </div>
+    <div class="lp-stats">
+      <div><div class="lp-stat-n">2.4L+</div><div class="lp-stat-l">Farmers Onboarded</div></div>
+      <div><div class="lp-stat-n">94%</div><div class="lp-stat-l">Disease Detection Accuracy</div></div>
+      <div><div class="lp-stat-n">₹18Cr</div><div class="lp-stat-l">Yield Revenue Saved</div></div>
+    </div>
+    <div class="lp-chips">
+      <div class="lp-chip">🌾 Crop Recommendation</div>
+      <div class="lp-chip">🔬 Disease Detection</div>
+      <div class="lp-chip">📈 Market Prices</div>
+      <div class="lp-chip">🎤 Voice AI</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 — LOGIN (unchanged) -->
+<div id="pg-login" class="screen">
+  <div class="login-box">
+    <div class="login-logo"><svg width="28" height="28" viewBox="0 0 100 100" fill="#fff"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z"/></svg></div>
+    <div class="login-h">Welcome to AgroSense</div>
+    <div class="login-sub">Sign in to your farm dashboard</div>
+    <button class="google-btn">🔵 Continue with Google</button>
+    <div class="or-divider">or sign in with email</div>
+    <label class="fl">Email or Phone</label>
+    <input class="fi" type="text" placeholder="farmer@agrosense.in" value="raju@farm.in" />
+    <label class="fl">Password</label>
+    <input class="fi" type="password" placeholder="••••••••" value="password" />
+    <button class="btn-signin" onclick="goPage('pg-setup')">Sign In to Dashboard →</button>
+    <div class="login-foot">Don't have an account? <a onclick="goPage('pg-setup')">Register Free</a></div>
+    <a class="login-back" onclick="goPage('pg-landing')">← Back to home</a>
+  </div>
+</div>
+
+<!-- PAGE 3 — FARM SETUP (unchanged) -->
+<div id="pg-setup" class="screen">
+  <div class="setup-hdr">
+    <div class="logo-mark">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 100 100" fill="#fff"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z"/></svg></div>
+      <span class="logo-txt">AgroSense</span>
+    </div>
+    <span style="font-size:.82rem;color:#718096">Farm Setup — Step 1 of 2</span>
+  </div>
+  <div class="setup-scroll">
+    <div class="setup-card">
+      <div class="prog"><div class="prog-s on"></div><div class="prog-s on"></div><div class="prog-s"></div><div class="prog-s"></div></div>
+      <div class="setup-h">Tell us about your farm</div>
+      <div class="setup-sub">We'll personalise your dashboard, crop recommendations and alerts based on your profile.</div>
+      <div class="form-grid">
+        <div><label class="fl">Your Full Name</label><input class="fi" id="inp-name" type="text" value="Raju Patil" placeholder="e.g. Raju Patil" /></div>
+        <div><label class="fl">Primary Crop</label><select class="fi fsel-arrow" id="inp-crop"><option>Wheat</option><option>Rice</option><option selected>Tomato</option><option>Cotton</option><option>Maize</option><option>Sugarcane</option><option>Onion</option></select></div>
+        <div><label class="fl">Farm Size (Acres)</label><input class="fi" id="inp-acres" type="number" value="5" placeholder="e.g. 5" /></div>
+        <div><label class="fl">Soil Type</label><select class="fi fsel-arrow"><option selected>Black Cotton Soil</option><option>Red Laterite</option><option>Alluvial</option><option>Sandy Loam</option></select></div>
+        <div><label class="fl">Farming Experience</label><select class="fi fsel-arrow"><option>0–2 years</option><option selected>3–10 years</option><option>10–20 years</option><option>20+ years</option></select></div>
+        <div><label class="fl">Crop Duration</label><select class="fi fsel-arrow"><option>2–3 months</option><option selected>4–6 months</option><option>6–9 months</option><option>Year-round</option></select></div>
+        <div><label class="fl">Village / Taluka</label><input class="fi" value="Hadapsar, Pune" placeholder="e.g. Hadapsar, Pune" /></div>
+        <div><label class="fl">State</label><select class="fi fsel-arrow"><option selected>Maharashtra</option><option>Karnataka</option><option>Punjab</option><option>Uttar Pradesh</option><option>Gujarat</option></select></div>
+      </div>
+      <div class="form-row">
+        <button class="btn-back" onclick="goPage('pg-login')">← Back</button>
+        <button class="btn-continue" onclick="enterDashboard()">Continue to Dashboard →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4 — DASHBOARD (with integrated chatbot) -->
+<div id="pg-dash" class="screen">
+  <nav class="sidebar">
+    <div class="sb-logo">
+      <div class="logo-mark">
+        <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 100 100" fill="#fff"><path d="M10 90 Q50 10 90 50 Q50 90 10 90Z"/></svg></div>
+        <span class="logo-txt">AgroSense</span>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="nav-item on" onclick="showSection('home',this)"><span class="nav-ic">🏠</span><span>Home</span></div>
+      <div class="nav-item" onclick="showSection('crops',this)"><span class="nav-ic">🌾</span><span>Crop Advice</span></div>
+      <div class="nav-item" onclick="showSection('disease',this)"><span class="nav-ic">🔬</span><span>Disease Check</span></div>
+      <div class="nav-item" onclick="showSection('alerts',this)"><span class="nav-ic">🔔</span><span>Alerts</span></div>
+      <div class="nav-item" onclick="showSection('settings',this)"><span class="nav-ic">⚙️</span><span>Settings</span></div>
+    </div>
+    <div class="sb-foot">
+      <div class="farmer-chip">
+        <div class="f-av" id="sb-av">RP</div>
+        <div style="flex:1;overflow:hidden">
+          <div class="f-name" id="sb-name">Raju Patil</div>
+          <div class="f-crop" id="sb-crop">Tomato · 5 acres</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dash-main">
+    <div class="topbar">
+      <span class="tb-title" id="tb-title">Farm Overview</span>
+      <div class="tb-right">
+        <button class="lang-btn on" onclick="setLang(this)">EN</button>
+        <button class="lang-btn" onclick="setLang(this)">HI</button>
+        <button class="lang-btn" onclick="setLang(this)">KN</button>
+        <div class="bell-btn" onclick="showSection('alerts',null)">🔔<div class="bell-dot"></div></div>
+        <div class="user-pill"><div class="up-av" id="tb-av">RP</div><span class="up-name" id="tb-name">Raju Patil</span></div>
+      </div>
+    </div>
+
+    <!-- HOME SECTION (unchanged AgroSense content) -->
+    <div id="sec-home" class="dash-section on">
+      <div class="hero-banner">
+        <div class="hero-orb1"></div><div class="hero-orb2"></div>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:.78rem;color:#a5d6a7;margin-bottom:.3rem;font-weight:500">Good morning ☀️</div>
+          <div id="hero-name" style="font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;font-weight:700;margin-bottom:.25rem">Raju Patil</div>
+          <div style="font-size:.85rem;color:#c8e6c9">Tomato crop is on track · Day 67 of 150</div>
+        </div>
+        <div class="hero-stats" style="position:relative;z-index:1">
+          <div class="hero-stat"><div class="hs-num">44%</div><div class="hs-lbl">Season Progress</div></div>
+          <div class="hero-stat"><div class="hs-num">₹24</div><div class="hs-lbl">Price /kg Today</div></div>
+          <div class="hero-stat"><div class="hs-num" style="color:#fbbf24">3</div><div class="hs-lbl">Active Alerts</div></div>
+          <div class="hero-stat"><div class="hs-num">82</div><div class="hs-lbl">Health Score</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:1rem;margin-bottom:1rem">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem">
+            <div><div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.3rem">📍 Pune, Maharashtra</div><div style="font-size:2.8rem;font-weight:800;color:#1b5e20;line-height:1">28°C</div><div style="font-size:.82rem;color:#4a5568;margin-top:.25rem">Partly Cloudy · Good for spray</div></div>
+            <div style="font-size:3.2rem;line-height:1">⛅</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.875rem">
+            <div style="background:#e8f5e9;border-radius:10px;padding:.55rem;text-align:center"><div>💧</div><div style="font-size:.8rem;font-weight:700;color:#1b5e20">72%</div><div style="font-size:.65rem;color:#718096">Humidity</div></div>
+            <div style="background:#e8f5e9;border-radius:10px;padding:.55rem;text-align:center"><div>💨</div><div style="font-size:.8rem;font-weight:700;color:#1b5e20">14</div><div style="font-size:.65rem;color:#718096">km/h</div></div>
+            <div style="background:#e8f5e9;border-radius:10px;padding:.55rem;text-align:center"><div>🌧</div><div style="font-size:.8rem;font-weight:700;color:#1b5e20">30%</div><div style="font-size:.65rem;color:#718096">Rain</div></div>
+          </div>
+          <div style="border-top:1px solid #d4e6d4;padding-top:.75rem">
+            <div style="font-size:.7rem;font-weight:700;color:#2e7d32;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.45rem">5-Day Forecast</div>
+            <div style="display:flex;justify-content:space-between">
+              <div style="text-align:center;font-size:.7rem;color:#718096"><div>Mon</div><div>☀️</div><div style="font-weight:700;color:#1a1a1a">30°</div></div>
+              <div style="text-align:center;font-size:.7rem;color:#718096"><div>Tue</div><div>⛅</div><div style="font-weight:700;color:#1a1a1a">28°</div></div>
+              <div style="text-align:center;font-size:.7rem;color:#718096"><div>Wed</div><div>🌧</div><div style="font-weight:700;color:#3b82f6">25°</div></div>
+              <div style="text-align:center;font-size:.7rem;color:#718096"><div>Thu</div><div>🌧</div><div style="font-weight:700;color:#3b82f6">24°</div></div>
+              <div style="text-align:center;font-size:.7rem;color:#718096"><div>Fri</div><div>☀️</div><div style="font-weight:700;color:#1a1a1a">31°</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.75rem">Crop Health</div>
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:.75rem">
+            <div style="position:relative;width:90px;height:90px">
+              <svg viewBox="0 0 100 100" width="90" height="90"><circle cx="50" cy="50" r="42" fill="none" stroke="#e8f5e9" stroke-width="10"/><circle cx="50" cy="50" r="42" fill="none" stroke="#2e7d32" stroke-width="10" stroke-dasharray="263.9" stroke-dashoffset="47.5" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:1.5rem;font-weight:800;color:#1b5e20">82</div><div style="font-size:.6rem;color:#718096">/100</div></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-bottom:.75rem"><span class="badge bdg-g">Good Health</span></div>
+          <div style="display:flex;flex-direction:column;gap:.45rem">
+            <div><div style="display:flex;justify-content:space-between;font-size:.73rem;color:#718096;margin-bottom:.18rem"><span>Leaf health</span><span style="color:#2e7d32;font-weight:700">90%</span></div><div style="height:5px;background:#e8f5e9;border-radius:3px"><div style="width:90%;height:100%;background:#43a047;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:.73rem;color:#718096;margin-bottom:.18rem"><span>Root strength</span><span style="color:#2e7d32;font-weight:700">78%</span></div><div style="height:5px;background:#e8f5e9;border-radius:3px"><div style="width:78%;height:100%;background:#43a047;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:.73rem;color:#718096;margin-bottom:.18rem"><span>Fruit set</span><span style="color:#f59e0b;font-weight:700">75%</span></div><div style="height:5px;background:#e8f5e9;border-radius:3px"><div style="width:75%;height:100%;background:#f59e0b;border-radius:3px"></div></div></div>
+          </div>
+          <div style="margin-top:.75rem;display:flex;gap:.3rem;flex-wrap:wrap"><span class="tag">Day 67</span><span class="tag">Flowering</span><span class="tag">No Pest</span></div>
+        </div>
+        <div class="card">
+          <div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.75rem">Market Prices</div>
+          <div style="padding:.875rem;background:#e8f5e9;border-radius:12px;border-left:4px solid #2e7d32;margin-bottom:.875rem">
+            <div style="font-size:.7rem;color:#718096;margin-bottom:.2rem">🍅 Tomato · Pune APMC</div>
+            <div style="display:flex;align-items:baseline;gap:.4rem"><span style="font-size:2rem;font-weight:800;color:#1b5e20">₹24</span><span style="font-size:.78rem;color:#718096">/kg</span><span class="pup" style="margin-left:auto">↑ 8%</span></div>
+            <div style="font-size:.72rem;color:#718096;margin-top:.2rem">Best sell window: Apr 7–12</div>
+          </div>
+          <div class="mrow"><div style="font-size:.82rem">🌶 Red Chilli</div><div style="font-size:.82rem;font-weight:700">₹110/kg <span class="pdn" style="font-size:.72rem">↓3%</span></div></div>
+          <div class="mrow"><div style="font-size:.82rem">🧅 Onion</div><div style="font-size:.82rem;font-weight:700">₹18/kg <span class="pup" style="font-size:.72rem">↑12%</span></div></div>
+          <div class="mrow"><div style="font-size:.82rem">🌾 Wheat</div><div style="font-size:.82rem;font-weight:700">₹22/kg <span style="font-size:.72rem;color:#718096">→</span></div></div>
+          <button class="btn btn-o btn-sm" style="width:100%;margin-top:.75rem" onclick="showSection('crops',null)">Full Market →</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem">
+        <div class="card" style="border-left:4px solid #ef4444">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem"><div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Urgent Alerts</div><span class="badge bdg-r">3 Active</span></div>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <div style="padding:.7rem;background:#fff5f5;border-radius:10px;border:1px solid #fecaca"><div style="font-size:.8rem;font-weight:700;color:#dc2626;margin-bottom:.12rem">🦠 Late Blight Risk – High</div><div style="font-size:.73rem;color:#7f1d1d;line-height:1.5;margin-bottom:.45rem">High humidity + cool nights. Spray within 48 hrs.</div><button class="btn btn-p btn-sm" onclick="showSection('disease',null)">Treat Now</button></div>
+            <div style="padding:.7rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a"><div style="font-size:.8rem;font-weight:700;color:#92400e;margin-bottom:.12rem">💧 Irrigation Due</div><div style="font-size:.73rem;color:#78350f">Soil moisture 38%. Due in 2 days.</div></div>
+            <div style="padding:.7rem;background:#eff6ff;border-radius:10px;border:1px solid #bfdbfe"><div style="font-size:.8rem;font-weight:700;color:#1e40af;margin-bottom:.12rem">🌧 Rain Forecast Friday</div><div style="font-size:.73rem;color:#1e3a8a">15–25mm expected. Delay fertiliser.</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.875rem">Today's Activity</div>
+          <div style="display:flex;flex-direction:column;gap:.05rem">
+            <div style="display:flex;gap:.875rem;padding-bottom:.65rem;border-bottom:1px solid #d4e6d4"><div style="width:38px;flex-shrink:0;text-align:center"><div style="font-size:.68rem;color:#718096">6 AM</div><div style="width:2px;height:18px;background:#66bb6a;border-radius:1px;margin:.2rem auto"></div></div><div><div style="font-size:.8rem;font-weight:700">✅ Morning irrigation</div><div style="font-size:.72rem;color:#718096">North field · 45 min</div></div></div>
+            <div style="display:flex;gap:.875rem;padding:.65rem 0;border-bottom:1px solid #d4e6d4"><div style="width:38px;flex-shrink:0;text-align:center"><div style="font-size:.68rem;color:#718096">10 AM</div><div style="width:2px;height:18px;background:#f59e0b;border-radius:1px;margin:.2rem auto"></div></div><div><div style="font-size:.8rem;font-weight:700">⚠ Disease scan alert</div><div style="font-size:.72rem;color:#718096">Late blight risk flagged</div></div></div>
+            <div style="display:flex;gap:.875rem;padding:.65rem 0;border-bottom:1px solid #d4e6d4"><div style="width:38px;flex-shrink:0;text-align:center"><div style="font-size:.68rem;color:#718096">2 PM</div><div style="width:2px;height:18px;background:#d4e6d4;border-radius:1px;margin:.2rem auto"></div></div><div><div style="font-size:.8rem;font-weight:600;color:#718096">⏳ Spray scheduled</div><div style="font-size:.72rem;color:#718096">Mancozeb · Pending</div></div></div>
+            <div style="display:flex;gap:.875rem;padding:.65rem 0"><div style="width:38px;flex-shrink:0;text-align:center"><div style="font-size:.68rem;color:#718096">5 PM</div><div style="width:2px;height:18px;background:#d4e6d4;border-radius:1px;margin:.2rem auto"></div></div><div><div style="font-size:.8rem;font-weight:600;color:#718096">⏳ Field walk</div><div style="font-size:.72rem;color:#718096">Weekly visual inspection</div></div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.875rem">
+          <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac;flex:1">
+            <div style="font-size:.7rem;color:#2e7d32;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem">🤖 AI Tip of the Day</div>
+            <p style="font-size:.82rem;color:#14532d;line-height:1.65;margin-bottom:.6rem">"Your tomato plants are at peak flowering. Apply potassium-rich fertiliser (0-0-50) this week to boost fruit set by up to 20%."</p>
+            <div style="font-size:.7rem;color:#2e7d32;font-style:italic">Based on Day 67 data + weather forecast</div>
+          </div>
+          <div class="card">
+            <div style="font-size:.7rem;color:#718096;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.65rem">Quick Actions</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+              <button class="btn btn-o btn-sm" onclick="showSection('disease',null)">🔬 Scan</button>
+              <button class="btn btn-o btn-sm" onclick="showSection('crops',null)">🌾 Advise</button>
+              <button class="btn btn-o btn-sm" onclick="showSection('alerts',null)">🔔 Alerts</button>
+              <button class="btn btn-p btn-sm" onclick="toggleVoice()">🎤 Ask AI</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem"><div class="sec-title" style="margin-bottom:0">📈 Yield Forecast</div><span class="badge bdg-g">On Track</span></div>
+          <div style="position:relative;height:170px"><canvas id="yieldChart"></canvas></div>
+          <div style="display:flex;justify-content:space-between;margin-top:.875rem;padding-top:.75rem;border-top:1px solid #d4e6d4">
+            <div><div style="font-size:.7rem;color:#718096">Expected yield</div><div style="font-weight:800;font-size:.95rem;color:#1b5e20">4,750 kg/acre</div></div>
+            <div><div style="font-size:.7rem;color:#718096">Harvest in</div><div style="font-weight:800;font-size:.95rem;color:#1b5e20">83 days</div></div>
+            <div><div style="font-size:.7rem;color:#718096">Est. revenue</div><div style="font-weight:800;font-size:.95rem;color:#2e7d32">₹1.14L</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem"><div class="sec-title" style="margin-bottom:0">💰 Season Economics</div><span class="badge bdg-g">Profitable</span></div>
+          <div style="position:relative;height:170px"><canvas id="profitChart"></canvas></div>
+          <div style="display:flex;justify-content:space-between;margin-top:.875rem;padding-top:.75rem;border-top:1px solid #d4e6d4">
+            <div><div style="font-size:.7rem;color:#718096">Total cost</div><div style="font-weight:800;font-size:.95rem;color:#dc2626">₹40,000</div></div>
+            <div><div style="font-size:.7rem;color:#718096">Gross revenue</div><div style="font-weight:800;font-size:.95rem;color:#43a047">₹1,14,000</div></div>
+            <div><div style="font-size:.7rem;color:#718096">Net profit</div><div style="font-weight:800;font-size:.95rem;color:#1b5e20">₹74,000</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CROPS SECTION (unchanged) -->
+    <div id="sec-crops" class="dash-section">
+      <div class="hero-banner" style="margin-bottom:1.1rem">
+        <div class="hero-orb1"></div><div class="hero-orb2"></div>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:.78rem;color:#a5d6a7;font-weight:500;margin-bottom:.3rem">Karnataka Smart Farming</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;font-weight:700">Crop Recommendation System</div>
+          <div style="font-size:.82rem;color:#c8e6c9;margin-top:.25rem">31 districts · live weather · profit calculator</div>
+        </div>
+        <div class="hero-stats" style="position:relative;z-index:1">
+          <div class="hero-stat"><div class="hs-num">31</div><div class="hs-lbl">Districts</div></div>
+          <div class="hero-stat"><div class="hs-num">15+</div><div class="hs-lbl">Crops</div></div>
+          <div class="hero-stat"><div class="hs-num">68%</div><div class="hs-lbl">Avg ROI</div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="sec-title" style="margin-bottom:.75rem">📍 Select Your District</div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+          <select id="cr-district-select" class="fi fsel-arrow" style="flex:2;min-width:180px;margin-bottom:0">
+            <option value="">Choose district…</option>
+          </select>
+          <button id="cr-load-btn" class="btn btn-p" style="white-space:nowrap">✨ Get Recommendations</button>
+          <button id="cr-gps-btn" class="btn btn-o" style="white-space:nowrap">📍 Detect Location</button>
+        </div>
+      </div>
+      <div id="cr-loading" style="display:none;text-align:center;padding:2rem">
+        <div class="cr-spinner"></div>
+        <p style="font-size:.85rem;color:var(--text3);margin-top:.75rem">Fetching crop data…</p>
+      </div>
+      <div id="cr-dashboard" style="display:none">
+        <div class="card" style="margin-bottom:1rem;border-left:4px solid var(--amber)">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+            <div style="display:flex;align-items:center;gap:1rem">
+              <span id="cr-w-icon" style="font-size:2rem">☀️</span>
+              <div>
+                <div id="cr-w-temp" style="font-size:1.6rem;font-weight:800;color:var(--g1)">--°C</div>
+                <div id="cr-w-cond" style="font-size:.78rem;color:var(--text3)">--</div>
+              </div>
+              <div style="border-left:1px solid var(--bdr);padding-left:1rem;font-size:.82rem;display:flex;flex-direction:column;gap:.2rem">
+                <span>💧 Humidity: <strong id="cr-w-hum">--%</strong></span>
+                <span>💨 Wind: <strong id="cr-w-wind">-- km/h</strong></span>
+              </div>
+            </div>
+            <div style="background:var(--g7);padding:.45rem 1rem;border-radius:20px;font-size:.78rem;color:var(--g2)">
+              🌱 <span id="cr-w-advice">Loading advisory…</span>
+            </div>
+          </div>
+        </div>
+        <div class="g4" style="margin-bottom:1rem">
+          <div style="background:var(--g7);border:1px solid var(--bdr);border-radius:14px;padding:1rem">
+            <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;font-weight:600;margin-bottom:.3rem">District</div>
+            <div id="cr-stat-district" style="font-size:1rem;font-weight:800;color:var(--g1)">--</div>
+          </div>
+          <div style="background:var(--g7);border:1px solid var(--bdr);border-radius:14px;padding:1rem">
+            <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;font-weight:600;margin-bottom:.3rem">Crops Listed</div>
+            <div id="cr-stat-crops" style="font-size:1rem;font-weight:800;color:var(--g1)">--</div>
+          </div>
+          <div style="background:var(--g7);border:1px solid var(--bdr);border-radius:14px;padding:1rem">
+            <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;font-weight:600;margin-bottom:.3rem">Avg ROI</div>
+            <div style="font-size:1rem;font-weight:800;color:var(--g1)">68%</div>
+          </div>
+          <div style="background:var(--g7);border:1px solid var(--bdr);border-radius:14px;padding:1rem">
+            <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;font-weight:600;margin-bottom:.3rem">Local Mandi</div>
+            <div id="cr-stat-mandi" style="font-size:.9rem;font-weight:800;color:var(--g1)">--</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:.4rem;background:#fff;border:1px solid var(--bdr);border-radius:50px;padding:.3rem;margin-bottom:1rem;flex-wrap:wrap" id="cr-tabs-bar">
+          <button class="cr-tab on" data-tab="cr-recs-tab">🌱 Crop Recommendations</button>
+          <button class="cr-tab" data-tab="cr-market-tab">💰 Market Prices</button>
+          <button class="cr-tab" data-tab="cr-profit-tab">📊 Profit Calculator</button>
+          <button class="cr-tab" data-tab="cr-products-tab">🛒 Buy Inputs</button>
+        </div>
+        <div id="cr-recs-tab">
+          <div id="cr-crops-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem"></div>
+        </div>
+        <div id="cr-market-tab" style="display:none">
+          <div class="card" style="margin-bottom:1rem">
+            <div class="sec-title">🏪 Live Mandi Prices — <span id="cr-mandi-name">--</span></div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead>
+                <tr style="font-size:.75rem;color:var(--text3);border-bottom:2px solid var(--bdr)">
+                  <th style="padding:.5rem .3rem;text-align:left;font-weight:700">Crop</th>
+                  <th style="padding:.5rem .3rem;text-align:left;font-weight:700">₹/quintal</th>
+                  <th style="padding:.5rem .3rem;text-align:left;font-weight:700">Demand</th>
+                  <th style="padding:.5rem .3rem;text-align:left;font-weight:700">Trend</th>
+                </tr>
+              </thead>
+              <tbody id="cr-market-tbody"></tbody>
+            </table>
+          </div>
+          <div class="card"><div style="height:220px"><canvas id="cr-price-chart"></canvas></div></div>
+        </div>
+        <div id="cr-profit-tab" style="display:none">
+          <div class="card" style="margin-bottom:1rem">
+            <div class="sec-title">📊 Profit & ROI Calculator</div>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1rem">
+              <div style="flex:2"><label class="fl">🌾 Select Crop</label><select id="cr-calc-crop" class="fi fsel-arrow" style="margin-bottom:0"></select></div>
+              <div style="flex:1"><label class="fl">📏 Acres</label><input type="number" id="cr-calc-acres" class="fi" value="1" step="0.5" min="0.5" style="margin-bottom:0"></div>
+              <button id="cr-calc-btn" class="btn btn-p">Calculate</button>
+            </div>
+            <div id="cr-profit-result"></div>
+          </div>
+          <div class="card"><div style="height:220px"><canvas id="cr-profit-chart"></canvas></div></div>
+        </div>
+        <div id="cr-products-tab" style="display:none">
+          <div class="card" style="margin-bottom:1rem">
+            <div class="sec-title">🛒 Trusted Agricultural Stores</div>
+            <p style="font-size:.82rem;color:var(--text3)">Buy seeds, pesticides, fertilizers & equipment from trusted platforms.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem">
+            <a href="https://www.agrostar.com" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">⭐</div><strong>AgroStar</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Pesticides · Seeds</div></a>
+            <a href="https://www.bighaat.com" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">🌿</div><strong>BigHaat</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Crop protection</div></a>
+            <a href="https://www.ugaoo.com" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">🌱</div><strong>Ugaoo</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Organic seeds</div></a>
+            <a href="https://www.amazon.in/s?k=agriculture+pesticides" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">📦</div><strong>Amazon Agri</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Farming tools</div></a>
+            <a href="https://www.iffcobazar.in" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">🏪</div><strong>IFFCO Bazar</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Cooperative</div></a>
+            <a href="https://www.khetigaadi.com" target="_blank" rel="noopener" class="cr-product-card"><div style="font-size:1.5rem;margin-bottom:.4rem">🚜</div><strong>KhetiGaadi</strong><div style="font-size:.75rem;color:var(--text3);margin-top:.2rem">Equipment</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISEASE SECTION (unchanged) -->
+    <div id="sec-disease" class="dash-section">
+      <div class="g2">
+        <div class="card">
+          <div class="sec-title">🔬 Upload Crop Photo</div>
+          <div class="uzone" onclick="simDisease()">
+            <div id="u-icon" style="font-size:2.8rem;margin-bottom:.65rem">📸</div>
+            <div id="u-text" style="font-weight:700;margin-bottom:.3rem">Click to upload a leaf photo</div>
+            <div id="u-sub" style="font-size:.78rem;color:#718096;margin-bottom:1rem">JPG, PNG up to 10MB · or drag &amp; drop</div>
+            <button class="btn btn-p btn-sm" onclick="event.stopPropagation();simDisease()">📷 Analyse Plant</button>
+          </div>
+          <div style="margin-top:.875rem;padding:.875rem;background:#e8f5e9;border-radius:12px">
+            <div style="font-size:.78rem;font-weight:700;color:#1b5e20;margin-bottom:.45rem">Tips for best results</div>
+            <div style="font-size:.76rem;color:#4a5568;display:flex;flex-direction:column;gap:.28rem">
+              <span>🌿 Capture the affected leaf clearly</span>
+              <span>☀️ Use natural daylight</span>
+              <span>📐 Keep leaf flat, fill the frame</span>
+              <span>🚫 Avoid blurry or shadowed shots</span>
+            </div>
+          </div>
+        </div>
+        <div id="dis-result">
+          <div class="card" style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;color:#718096">
+            <div style="font-size:3.5rem;margin-bottom:.875rem">🌱</div>
+            <div style="font-weight:700;font-size:.95rem;color:#1a1a1a">No image analysed yet</div>
+            <div style="font-size:.8rem;margin-top:.35rem">Upload a photo to detect diseases</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTS SECTION (unchanged) -->
+    <div id="sec-alerts" class="dash-section">
+      <div class="g2" style="margin-bottom:1rem">
+        <div style="background:#e8f5e9;border:1px solid var(--bdr);border-radius:14px;padding:1rem"><div style="font-size:.7rem;color:#718096;text-transform:uppercase;font-weight:600;margin-bottom:.3rem">Critical</div><div style="font-size:1.6rem;font-weight:800;color:#dc2626">2</div></div>
+        <div style="background:#e8f5e9;border:1px solid var(--bdr);border-radius:14px;padding:1rem"><div style="font-size:.7rem;color:#718096;text-transform:uppercase;font-weight:600;margin-bottom:.3rem">Warnings</div><div style="font-size:1.6rem;font-weight:800;color:#d97706">5</div></div>
+      </div>
+      <div class="card">
+        <div class="sec-title">📋 Alert History</div>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot r"></div><div class="tl-card"><div class="tl-date">Today, 8:14 AM</div><div class="tl-title">⚠ Late Blight Risk Detected</div><div class="tl-desc">High humidity 72% + cool nights = ideal for late blight. Apply Mancozeb 75 WP within 48 hrs.</div><button class="btn btn-p btn-sm" style="margin-top:.6rem" onclick="showSection('disease',null)">View Treatment →</button></div></div>
+          <div class="tl-item"><div class="tl-dot a"></div><div class="tl-card"><div class="tl-date">Yesterday, 6:00 PM</div><div class="tl-title">💧 Irrigation Reminder</div><div class="tl-desc">Soil moisture dropped to 38%. Irrigate within next 2 days for optimal flowering stage growth.</div></div></div>
+          <div class="tl-item"><div class="tl-dot b"></div><div class="tl-card"><div class="tl-date">Apr 3 · 10:30 AM</div><div class="tl-title">🌧 Rainfall Forecast Alert</div><div class="tl-desc">IMD predicts 15–25mm rainfall Apr 5–6. Postpone fertiliser application by 3 days.</div></div></div>
+          <div class="tl-item"><div class="tl-dot g"></div><div class="tl-card"><div class="tl-date">Apr 1 · 9:00 AM</div><div class="tl-title">✅ Crop Inspection Complete</div><div class="tl-desc">Weekly AI scan done. No major disease. Health score 82/100. Continue current practice.</div></div></div>
+          <div class="tl-item"><div class="tl-dot a"></div><div class="tl-card"><div class="tl-date">Mar 28 · 3:15 PM</div><div class="tl-title">📈 Market Price Spike</div><div class="tl-desc">Tomato prices at Pune APMC jumped 18% to ₹22/kg. Current price ₹24/kg — good selling window.</div></div></div>
+          <div class="tl-item"><div class="tl-dot b"></div><div class="tl-card"><div class="tl-date">Mar 25 · 11:00 AM</div><div class="tl-title">🌾 Fertiliser Reminder</div><div class="tl-desc">2nd dose NPK (19:19:19) due this week — Day 60–70 flowering stage. Apply 2.5 kg/acre.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS SECTION (unchanged) -->
+    <div id="sec-settings" class="dash-section">
+      <div class="g2">
+        <div class="card">
+          <div style="font-weight:700;font-size:.95rem;color:#1a1a1a;margin-bottom:.875rem;padding-bottom:.5rem;border-bottom:1px solid var(--bdr)">👤 Profile</div>
+          <div style="margin-bottom:.875rem"><label class="fl">Name</label><input class="fi" value="Raju Patil"/></div>
+          <div style="margin-bottom:.875rem"><label class="fl">Phone</label><input class="fi" value="+91 98765 43210"/></div>
+          <div style="margin-bottom:.875rem"><label class="fl">District</label><input class="fi" value="Pune, Maharashtra"/></div>
+          <div style="margin-bottom:1rem"><label class="fl">Primary Crop</label><select class="fi fsel-arrow"><option selected>Tomato</option><option>Wheat</option><option>Rice</option><option>Cotton</option></select></div>
+          <button class="btn btn-p btn-sm">Save Profile</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div class="card">
+            <div style="font-weight:700;font-size:.95rem;color:#1a1a1a;margin-bottom:.875rem;padding-bottom:.5rem;border-bottom:1px solid var(--bdr)">🌐 Language</div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <button class="btn btn-p btn-sm">EN – English</button>
+              <button class="btn btn-o btn-sm">HI – हिंदी</button>
+              <button class="btn btn-o btn-sm">KN – ಕನ್ನಡ</button>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-weight:700;font-size:.95rem;color:#1a1a1a;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--bdr)">🔔 Notifications</div>
+            <div class="s-row"><div><div style="font-size:.875rem;font-weight:600">Disease Alerts</div><div style="font-size:.75rem;color:#718096">Notified when disease risk detected</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="s-row"><div><div style="font-size:.875rem;font-weight:600">Market Price Alerts</div><div style="font-size:.75rem;color:#718096">Price changes above 10%</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="s-row"><div><div style="font-size:.875rem;font-weight:600">Weather Warnings</div><div style="font-size:.75rem;color:#718096">Rain, frost, heatwave alerts</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="s-row"><div><div style="font-size:.875rem;font-weight:600">Irrigation Reminders</div><div style="font-size:.75rem;color:#718096">Soil moisture-based reminders</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+            <div class="s-row"><div><div style="font-size:.875rem;font-weight:600">Voice Assistant</div><div style="font-size:.75rem;color:#718096">Enable floating AI assistant</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== INTEGRATED ADVANCED CHATBOT (replaces old voice panel) ===== -->
+    <div class="vfab">
+      <div class="vpanel" id="vpanel">
+        <div class="vp-hdr">
+          <div class="vp-title">🎤 AgroSense AI · Female Voice</div>
+          <button class="vp-close" onclick="toggleVoice()">✕</button>
+        </div>
+        <div class="vp-body">
+          <div class="vp-chat-msgs" id="chatMessagesContainer"></div>
+          <div class="vp-input-area">
+            <div class="vp-text-row">
+              <input class="vp-inp" id="chatTypingInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter') sendChatMessage()" />
+              <button class="vp-send" onclick="sendChatMessage()">➤</button>
+            </div>
+            <div class="vp-voice-row">
+              <div class="vp-voice-btns">
+                <button class="vp-voice-btn" id="startVoiceBtn" onclick="chatbot.startListening()"><span>🎤</span> Start</button>
+                <button class="vp-voice-btn" id="stopVoiceBtn" onclick="chatbot.stopListening()" disabled><span>⏹️</span> Stop</button>
+                <button class="vp-voice-btn" onclick="chatbot.speakLastResponse()"><span>🔊</span> Repeat</button>
+              </div>
+              <select class="vp-lang-select" id="chatLanguageSelect">
+                <option value="en">🇬🇧 EN</option>
+                <option value="hi">🇮🇳 HI</option>
+                <option value="kn">🇮🇳 KN</option>
+              </select>
+              <label style="display:flex;align-items:center;gap:4px;font-size:.7rem;">
+                <input type="checkbox" id="femaleVoiceToggle" checked> 👩 Female
+              </label>
+            </div>
+            <div class="vp-quick-row">
+              <button class="vp-quick" data-query="Best crops for all seasons">🌾 All seasons</button>
+              <button class="vp-quick" data-query="Summer crops">☀️ Summer</button>
+              <button class="vp-quick" data-query="Monsoon crops">🌧️ Monsoon</button>
+              <button class="vp-quick" data-query="Winter crops">❄️ Winter</button>
+              <button class="vp-quick" data-query="Farming equipment">🚜 Equipment</button>
+              <button class="vp-quick" data-query="Pest control">🐛 Pest</button>
+              <button class="vp-quick" data-query="Trusted agri companies">🏢 Companies</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="vfab-btn" id="vfab-btn" onclick="toggleVoice()">💬</button>
+    </div>
+    <!-- end chatbot integration -->
+
+  </div><!-- /dash-main -->
+</div><!-- /pg-dash -->
+
+<!-- Crop Detail Modal (unchanged) -->
+<div class="cr-modal-overlay" id="cr-modal-overlay">
+  <div class="cr-modal-box">
+    <div class="cr-modal-hdr">
+      <div id="cr-modal-title" style="font-weight:700;font-size:1rem;color:#fff">Crop Details</div>
+      <button id="cr-modal-close" style="background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer;line-height:1;padding:0 4px">×</button>
+    </div>
+    <div id="cr-modal-body" style="padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem"></div>
+  </div>
+</div>
